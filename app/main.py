@@ -102,7 +102,8 @@ def extrair_filtros():
 @app.route("/", methods=["GET"])
 def index():
     escolas = carregar_opcoes("Escola")
-    series = carregar_opcoes("Ano/Série")
+    series = carregar_opcoes("Ano/Série")    if __name__ == "__main__":
+        app.run(host="127.0.0.1", port=5000, debug=True)
     turmas = carregar_opcoes("Turma")
     componentes = carregar_opcoes("Componente")
 
@@ -148,4 +149,4 @@ def index():
     )
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="127.0.0.1", port=5000, debug=True)
