@@ -111,18 +111,29 @@
         </div>
         <div class="col-md-3">
           <label class="form-label mb-1">Ano/Série</label>
-          <input type="text" name="serie" class="form-control" value="{{ request.args.get('serie', '') }}" placeholder="Ex: 5º Ano">
+          <select name="serie" class="form-select">
+            <option value="">Todas</option>
+            {% for s in series %}
+            <option value="{{ s }}" {% if request.args.get('serie') == s %}selected{% endif %}>{{ s }}</option>
+            {% endfor %}
+          </select>
         </div>
         <div class="col-md-3">
           <label class="form-label mb-1">Turma</label>
-          <input type="text" name="turma" class="form-control" value="{{ request.args.get('turma', '') }}" placeholder="Ex: A">
+          <select name="turma" class="form-select">
+            <option value="">Todas</option>
+            {% for t in turmas %}
+            <option value="{{ t }}" {% if request.args.get('turma') == t %}selected{% endif %}>{{ t }}</option>
+            {% endfor %}
+          </select>
         </div>
         <div class="col-md-3">
           <label class="form-label mb-1">Componente</label>
           <select name="componente" class="form-select">
             <option value="">Todos</option>
-            <option value="Português" {% if request.args.get('componente') == 'Português' %}selected{% endif %}>Português</option>
-            <option value="Matemática" {% if request.args.get('componente') == 'Matemática' %}selected{% endif %}>Matemática</option>
+            {% for c in componentes %}
+            <option value="{{ c }}" {% if request.args.get('componente') == c %}selected{% endif %}>{{ c }}</option>
+            {% endfor %}
           </select>
         </div>
         <div class="col-12 mt-2 text-end">

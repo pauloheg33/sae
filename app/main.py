@@ -104,7 +104,20 @@ def index():
     else:
         graph_html = "<p>Selecione uma série e componente para ver o desempenho real.</p>"
 
-    return render_template("index.html", graph=graph_html, escolas=escolas)
+    # Atualiza as listas de escolas, séries, turmas e componentes com base no filtro aplicado
+    escolas = sorted(df['Escola'].dropna().unique()) if 'Escola' in df else []
+    series = sorted(df['Ano/Série'].dropna().unique()) if 'Ano/Série' in df else []
+    turmas = sorted(df['Turma'].dropna().unique()) if 'Turma' in df else []
+    componentes = sorted(df['Componente'].dropna().unique()) if 'Componente' in df else []
+
+    return render_template(
+        "index.html",
+        graph=graph_html,
+        escolas=escolas,
+        series=series,
+        turmas=turmas,
+        componentes=componentes
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)
