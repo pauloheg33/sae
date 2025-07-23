@@ -69,11 +69,27 @@ def desempenho_por_questao(df_alunos, gabaritos, filtro_ano, filtro_comp):
         })
     return pd.DataFrame(dados)
 
+def carregar_opcoes(coluna):
+    opcoes = set()
+    pasta = "../data"
+    if not os.path.exists(pasta):
+        return []
+    for arquivo in os.listdir(pasta):
+        if arquivo.endswith(".csv"):
+            df = pd.read_csv(os.path.join(pasta, arquivo))
+            if coluna in df.columns:
+                opcoes.update(df[coluna].dropna().unique())
+    return sorted(opcoes)
+
 @app.route("/", methods=["GET"])
 def index():
+    escolas = carregar_opcoes("Escola")
+    series = carregar_opcoes("Ano/Série")
+    turmas = carregar_opcoes("Turma")
+    componentes = carregar_opcoes("Componente")
+
     df = carregar_dados()
     gabaritos = carregar_gabaritos()
-    escolas = carregar_escolas()
 
     escola = request.args.get("escola")
     serie = request.args.get("serie")
@@ -103,12 +119,6 @@ def index():
             graph_html = "<p>Nenhum dado/gabarito encontrado para este filtro.</p>"
     else:
         graph_html = "<p>Selecione uma série e componente para ver o desempenho real.</p>"
-
-    # Atualiza as listas de escolas, séries, turmas e componentes com base no filtro aplicado
-    escolas = sorted(df['Escola'].dropna().unique()) if 'Escola' in df else []
-    series = sorted(df['Ano/Série'].dropna().unique()) if 'Ano/Série' in df else []
-    turmas = sorted(df['Turma'].dropna().unique()) if 'Turma' in df else []
-    componentes = sorted(df['Componente'].dropna().unique()) if 'Componente' in df else []
 
     return render_template(
         "index.html",
