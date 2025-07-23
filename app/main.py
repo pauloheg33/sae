@@ -81,6 +81,24 @@ def carregar_opcoes(coluna):
                 opcoes.update(df[coluna].dropna().unique())
     return sorted(opcoes)
 
+def extrair_filtros():
+    escolas, series, turmas, componentes = set(), set(), set(), set()
+    pasta = "../data"
+    if not os.path.exists(pasta):
+        return [], [], [], []
+    for arquivo in os.listdir(pasta):
+        if arquivo.endswith(".csv"):
+            df = pd.read_csv(os.path.join(pasta, arquivo))
+            if "Escola" in df.columns:
+                escolas.update(df["Escola"].dropna().unique())
+            if "Ano/Série" in df.columns:
+                series.update(df["Ano/Série"].dropna().unique())
+            if "Turma" in df.columns:
+                turmas.update(df["Turma"].dropna().unique())
+            if "Componente" in df.columns:
+                componentes.update(df["Componente"].dropna().unique())
+    return sorted(escolas), sorted(series), sorted(turmas), sorted(componentes)
+
 @app.route("/", methods=["GET"])
 def index():
     escolas = carregar_opcoes("Escola")
