@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Desempenho Escolar</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="p-4">
+  <h1>Dashboard de Desempenho</h1>
+  <form method="get">
+    <select name="escola" class="form-select mb-2">
+      <option value="">Selecione a Escola</option>
+      {% for esc in escolas %}
+      <option value="{{ esc }}">{{ esc }}</option>
+      {% endfor %}
+    </select>
+    <button class="btn btn-primary">Filtrar</button>
+  </form>
+  <div class="mt-4">
+    {{ graph|safe }}
+  </div>
+</body>
+</html>
