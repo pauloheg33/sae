@@ -102,8 +102,7 @@ def extrair_filtros():
 @app.route("/", methods=["GET"])
 def index():
     escolas = carregar_opcoes("Escola")
-    series = carregar_opcoes("Ano/Série")    if __name__ == "__main__":
-        app.run(debug=True)  # Isso já usa 127.0.0.1:5000 por padrão
+    series = carregar_opcoes("Ano/Série")
     turmas = carregar_opcoes("Turma")
     componentes = carregar_opcoes("Componente")
 
@@ -149,4 +148,4 @@ def index():
     )
 
 if __name__ == "__main__":
-    app.run(debug=True)  # Isso já usa 127.0.0.1:5000 por padrão
+    app.run(debug=True)
