@@ -30,6 +30,18 @@ def carregar_gabaritos():
         gabaritos[nome] = df
     return gabaritos
 
+def carregar_escolas():
+    escolas = set()
+    pasta = "../data"
+    if not os.path.exists(pasta):
+        return []
+    for arquivo in os.listdir(pasta):
+        if arquivo.endswith(".csv"):
+            df = pd.read_csv(os.path.join(pasta, arquivo))
+            if "Escola" in df.columns:
+                escolas.update(df["Escola"].dropna().unique())
+    return sorted(escolas)
+
 def desempenho_por_questao(df_alunos, gabaritos, filtro_ano, filtro_comp):
     # Supondo que o nome do gabarito seja "5ºAno_Português" etc.
     chave_gab = f"{filtro_ano}_{filtro_comp}".replace(" ", "").replace("º", "º")
@@ -61,6 +73,7 @@ def desempenho_por_questao(df_alunos, gabaritos, filtro_ano, filtro_comp):
 def index():
     df = carregar_dados()
     gabaritos = carregar_gabaritos()
+    escolas = carregar_escolas()
 
     escola = request.args.get("escola")
     serie = request.args.get("serie")
@@ -90,8 +103,6 @@ def index():
             graph_html = "<p>Nenhum dado/gabarito encontrado para este filtro.</p>"
     else:
         graph_html = "<p>Selecione uma série e componente para ver o desempenho real.</p>"
-
-    escolas = df["Escola"].unique() if not df.empty else []
 
     return render_template("index.html", graph=graph_html, escolas=escolas)
 
