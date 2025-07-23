@@ -8,6 +8,8 @@ app = Flask(__name__)
 def carregar_dados():
     dados = []
     pasta = "../data"
+    if not os.path.exists(pasta):
+        os.makedirs(pasta)
     for arquivo in os.listdir(pasta):
         if arquivo.endswith(".csv"):
             df = pd.read_csv(os.path.join(pasta, arquivo))
