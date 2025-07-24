@@ -1,7 +1,7 @@
 import plotly.graph_objs as go
 import plotly.io as pio
 from models import AlunoResposta, Gabarito
-from flask import Markup
+from markupsafe import Markup
 
 def gerar_grafico_desempenho(respostas, serie=None, componente=None):
     if not respostas:
