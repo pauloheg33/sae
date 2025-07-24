@@ -98,6 +98,21 @@
       </div>
     </div>
     <div class="filter-card">
+      <form method="get" class="mb-3">
+        <div class="row g-2 align-items-end">
+          <div class="col-md-4">
+            <label class="form-label mb-1">Tipo de Gráfico</label>
+            <select name="tipo_grafico" class="form-select" onchange="this.form.submit()">
+              <option value="questao" {% if tipo_grafico == 'questao' %}selected{% endif %}>Por Questão</option>
+              <option value="turma" {% if tipo_grafico == 'turma' %}selected{% endif %}>Por Turma</option>
+              <option value="escola" {% if tipo_grafico == 'escola' %}selected{% endif %}>Por Escola</option>
+            </select>
+          </div>
+        </div>
+      </form>
+      <div class="mb-2 text-end">
+        <a href="{{ url_for('upload_file') }}" class="btn btn-outline-primary btn-sm">Upload de CSV</a>
+      </div>
       <form method="get" class="row g-2 align-items-end">
         <div class="col-md-3">
           <label class="form-label mb-1">Escola</label>

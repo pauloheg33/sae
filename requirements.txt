@@ -2,3 +2,6 @@ flask
 pandas
 plotly
 jinja2
+pytest
+black
+flake8
